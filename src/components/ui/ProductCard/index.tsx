@@ -1,4 +1,3 @@
-import lodash from "lodash";
 import Link from "next/link";
 import { FC } from "react";
 
@@ -17,8 +16,8 @@ interface IProductCardProps {
 const ProductCard: FC<IProductCardProps> = ({ product }) => {
   const productRating = product?.rating as number;
   const productPrice = utils.getProductPrice(
-    lodash.get(product, "pricing.priceRange.start.gross.amount", 0),
-    lodash.get(product, "pricing.priceRange.start.currency"),
+    product?.pricing?.priceRange?.start?.gross?.amount || 0,
+    product?.pricing?.priceRange?.start?.gross?.currency,
   );
 
   return (

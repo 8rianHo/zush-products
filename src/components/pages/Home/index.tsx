@@ -1,5 +1,4 @@
 import { useLazyQuery } from "@apollo/client";
-import lodash from "lodash";
 import { FC, useEffect, useState } from "react";
 
 import { globalConstants } from "@/lib/constants";
@@ -34,13 +33,10 @@ const Home: FC<IHomeProps> = ({ products, paginationInfo }) => {
 
   useEffect(() => {
     if (data) {
-      setRenderedProducts((p) => [
-        ...p,
-        ...lodash.get(data, "products.edges", [] as ProductCountableEdge[]),
-      ]);
+      setRenderedProducts((p) => [...p, ...(data?.products?.edges || [])]);
 
       setRenderedPaginationInfo({
-        ...lodash.get(data, "products.pageInfo", {} as PageInfo),
+        ...(data?.products?.pageInfo || {}),
       });
     }
   }, [data]);

@@ -1,4 +1,3 @@
-import lodash from "lodash";
 import { GetServerSideProps } from "next";
 import { FC, Fragment } from "react";
 
@@ -12,23 +11,15 @@ import PageLayout from "@/components/ui/PageLayout";
 
 import { productQueries } from "@/modules/Product/queries";
 
-import {
-  PageInfo,
-  ProductCountableConnection,
-  ProductCountableEdge,
-} from "@/gql/graphql";
+import { ProductCountableConnection } from "@/gql/graphql";
 
 interface IRootProps {
   productData: ProductCountableConnection;
 }
 
 const Root: FC<IRootProps> = ({ productData }) => {
-  const paginationInfo = lodash.get(productData, "pageInfo", {} as PageInfo);
-  const products = lodash.get(
-    productData,
-    "edges",
-    [] as ProductCountableEdge[],
-  );
+  const paginationInfo = productData?.pageInfo || {};
+  const products = productData?.edges || [];
 
   return (
     <Fragment>
@@ -49,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     },
   });
 
-  const products = lodash.get(data, "products", null);
+  const products = data?.products || null;
 
   if (!products) {
     return {

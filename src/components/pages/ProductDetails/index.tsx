@@ -1,4 +1,3 @@
-import lodash from "lodash";
 import { FC, Fragment } from "react";
 
 import { utils } from "@/lib/utils";
@@ -14,8 +13,8 @@ interface IProductDetailsProps {
 
 const ProductDetails: FC<IProductDetailsProps> = ({ product }) => {
   const productPrice = utils.getProductPrice(
-    lodash.get(product, "pricing.priceRange.start.gross.amount", 0),
-    lodash.get(product, "pricing.priceRange.start.currency"),
+    product?.pricing?.priceRange?.start?.gross?.amount || 0,
+    product?.pricing?.priceRange?.start?.gross?.currency,
   );
 
   const productDescriptionBlocks = utils.parseJsonDesc(

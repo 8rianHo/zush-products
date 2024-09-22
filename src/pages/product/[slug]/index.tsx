@@ -1,4 +1,3 @@
-import lodash from "lodash";
 import { GetServerSideProps } from "next";
 import { FC, Fragment } from "react";
 
@@ -40,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
   });
 
-  const product = lodash.get(data, "product", null);
+  const product = data?.product || null;
 
   if (!product) {
     return { notFound: true };
